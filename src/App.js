@@ -20,7 +20,7 @@
 //             Learn React
 //           </a>
 //         </header> */}
-        
+
 //       </div>
 //     );
 //   }
@@ -28,44 +28,94 @@
 
 // export default App;
 
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+// import axios from "axios";
+// import app from "./people.json";
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [],
-            isLoaded: false
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+      isLoaded: false,
+      userList: []
+    };
+  }
+  componentDidMount() {
+    fetch("https://mk-api.herokuapp.com/resume/project/all")
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          isLoaded: true,
+          items: json
+        });
+      });
+    //   axios
+    //     .get("../public/people.json") // JSON File Path
+    //     .then(response => {
+    //       this.setState({
+    //         userList: response.data
+    //       });
+    //     })
+    //     .catch(function(error) {
+    //       console.log(error);
+    //     });
+
+    fetch("./people.json")
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          isLoaded: true,
+          userList: data
+        });
+        console.log("data:", JSON.stringify(data));
+      });
+  }
+  // componentDidMount() {
+
+  // }
+  render() {
+    var { isLoaded, items, userList } = this.state;
+    if (!isLoaded) {
+      return <div>Loading...</div>;
     }
-    componentDidMount() {
-        fetch('https://mk-api.herokuapp.com/resume/project/all')
-            .then(res => res.json())
-            .then(json => {
-                this.setState({
-                    isLoaded: true,
-                    items: json
-                })
-            });
-    }
-    render() {
-        var { isLoaded, items } = this.state;
-        if (!isLoaded) {
-            return <div>Loading...</div>;
-        }
-        return (
-            <div classname="App">
-                
-                <ul>
-                    {items.map(item => (
-                        <li key="{item.id}">
-                            Name: {item.name} | Description : {item.description} | Images : {item.image} 
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        );
-    }
+    // const usersList = this.state.userList;
+    // let usersListBlock = "";
+    // if (usersList.length > 0) {
+    //   usersListBlock = usersList.map(obj => {
+    //     return (
+    //       <div
+    //         key={obj.id}
+    //         id={obj.id}
+    //         imgPath={obj.avatar_url}
+    //         name={obj.name}
+    //       />
+    //     );
+    //   });
+    // }
+    return (
+      <div className="App">
+        {/* <span>{app}</span> */}
+        <ul>
+          {items.map(item => (
+            <li key="{item.id}">
+              Name: {item.name} | Description : {item.description} | Images :{" "}
+              {item.image}
+            </li>
+          ))}
+        </ul>
+
+        <ul>
+          {userList.map(te => (
+            <li key="{te.id}">
+              Name: {te.name} | Description : {te.Description} | Images :
+              {te.img} | Likes : {te.Likes}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
 }
 
 export default App;
