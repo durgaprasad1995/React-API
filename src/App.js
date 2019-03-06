@@ -96,22 +96,41 @@ class App extends Component {
     return (
       <div className="App">
         {/* <span>{app}</span> */}
-        <ul>
+        {/* <ul>
           {items.map(item => (
             <li key="{item.id}">
               Name: {item.name} | Description : {item.description} | Images :{" "}
               {item.image}
             </li>
           ))}
-        </ul>
+        </ul> */}
+        {items.map((items, index) => {
+          return (
+            <div key={index}>
+              <span>{items.name}</span>&nbsp;&nbsp;&nbsp;
+              <span>{items.description}</span>&nbsp;&nbsp;&nbsp;
+              {/* <span>{items.Likes}</span> */}
+            </div>
+          );
+        })}
 
         <ul>
-          {userList.map(te => (
+          {/* {userList.map(te => (
             <li key="{te.id}">
               Name: {te.name} | Description : {te.Description} | Images :
               {te.img} | Likes : {te.Likes}
             </li>
-          ))}
+          ))} */}
+
+          {userList.map((items, index) => {
+            return (
+              <div key={index}>
+                <span>{items.name}</span>&nbsp;&nbsp;&nbsp;
+                <span>{items.Description}</span>&nbsp;&nbsp;&nbsp;
+                <span>{items.Likes}</span>
+              </div>
+            );
+          })}
         </ul>
       </div>
     );
